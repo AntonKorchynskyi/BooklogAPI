@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var configs = require('./configs/globals');
+var mongoose = require('mongoose');
+
+// routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -21,6 +25,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// MongoDB connection
+mongoose
+  .connect(configs.ConnectionStrings.MongoDB)
+  .then(() => {
+    console.log("Successfully connected to MongoDB - Assignment2 DB");
+  })
+  .catch((error) => {
+    console.log(`Error connecting to MongoDB. ${error}`);
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
