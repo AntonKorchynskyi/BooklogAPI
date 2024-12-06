@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+// load global configurations and mongoose
 var configs = require('./configs/globals');
 var mongoose = require('mongoose');
 
 // routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var booksRouter = require('./routes/api/books');
 
 var app = express();
 
@@ -23,8 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// main routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/books', booksRouter);
 
 // MongoDB connection
 mongoose

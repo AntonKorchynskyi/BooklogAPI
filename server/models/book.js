@@ -17,13 +17,13 @@ const booksSchemaDefinition = {
     completionDate: {
         type: Date,
     },
-    Rating: {
+    rating: {
         type: Number,
         required: true,
         min: 1,
         max: 10,
     },
-    Review: {
+    review: {
         type: String,
     },
 };
