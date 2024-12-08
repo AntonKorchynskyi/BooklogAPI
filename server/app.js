@@ -6,6 +6,10 @@ var logger = require('morgan');
 // load global configurations and mongoose
 var configs = require('./configs/globals');
 var mongoose = require('mongoose');
+// import passport packages
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
+
 
 // routers
 var indexRouter = require('./routes/index');
@@ -24,10 +28,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// initialize and configure passport
+app.use(passport.initialize());
+passport.use(
+  new BasicStrategy((username, password, done) => {
+    if (
+      username === configs.Credentials.Username &&
+      password === configs.Credentials.Password
+    ) {
+      console.log('Authentication successful');
+      return done(null, true);
+    } else {      
+      console.log('Authentication failed');
+      return done(null, false);
+    }
+  })
+)
+
 // main routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/books', booksRouter);
+app.use('/api/books', 
+  passport.authenticate('basic', { session: false }),
+  booksRouter
+);
 
 // MongoDB connection
 mongoose

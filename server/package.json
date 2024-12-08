@@ -14,6 +14,8 @@
     "http-errors": "~1.6.3",
     "mongoose": "^8.8.3",
     "morgan": "~1.9.1",
-    "openai": "^4.76.0"
+    "openai": "^4.76.0",
+    "passport": "^0.7.0",
+    "passport-http": "^0.3.0"
   }
 }

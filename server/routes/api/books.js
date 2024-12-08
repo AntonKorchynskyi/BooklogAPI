@@ -14,14 +14,15 @@ const Book = require('../../models/book');
 
 const pageSize = 8; // pagination specification for filtering
 
-// GET all the books
+// GET /books
+// get all the books
 router.get('/', async (req, res, next) => {
     // get the book list from the DB
     let books = await Book.find();
     res.status(200).json(books);
 });
 
-// GET 
+// GET /books/search
 // gets only the specified books (or all of them if no filters were given)
 router.get('/search', async (req, res, next) => {
     let query = {};

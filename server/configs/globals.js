@@ -4,8 +4,9 @@ const globals = {
     "ConnectionStrings": {
         "MongoDB": process.env.CONNECTION_STRING_MONGODB,
     },
-    "Authentication": {
-
+    "Credentials": {
+        "Username": process.env.USERNAME_WEB_API_2,
+        "Password": process.env.PASSWORD,
     },
     "ApiKeys": {
         "OpenAI": process.env.OPENAI_API_KEY,
