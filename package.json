@@ -16,6 +16,9 @@
     "morgan": "~1.9.1",
     "openai": "^4.76.0",
     "passport": "^0.7.0",
-    "passport-http": "^0.3.0"
+    "passport-http": "^0.3.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   }
 }

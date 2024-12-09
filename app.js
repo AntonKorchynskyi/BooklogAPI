@@ -9,7 +9,11 @@ var mongoose = require('mongoose');
 // import passport packages
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-
+// import OpenAPI packages
+var swaggerUI = require('swagger-ui-express');
+// loading documentation from YAML file
+var YAML = require('yamljs');
+var swaggerDoc = YAML.load('./documentation/api-specs.yaml');
 
 // routers
 var indexRouter = require('./routes/index');
@@ -27,6 +31,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 // initialize and configure passport
 app.use(passport.initialize());

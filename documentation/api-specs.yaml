@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: BookLog API
+  description: API for managing a book collection, including CRUD operations and book recommendations using openAI API.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/books:
+    get:
+      summary: Get all books
+      security:
+        - basicAuth: []
+      description: Retrieves a list of all books in the collection.
+      responses:
+        200:
+          description: A list of books.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    post:
+      summary: Add a new book
+      security:
+        - basicAuth: []
+      description: Adds a new book to the collection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        200:
+          description: The added book.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /api/books/search:
+    get:
+      summary: Search books
+      security:
+        - basicAuth: []
+      description: Retrieves books based on query parameters such as title, author, genre, and rating.
+      parameters:
+        - name: title
+          in: query
+          description: The title of the book.
+          schema:
+            type: string
+        - name: author
+          in: query
+          description: The author of the book.
+          schema:
+            type: string
+        - name: genre
+          in: query
+          description: The genre of the book.
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: The rating of the book.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: A list of books matching the query.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+  /api/books/{id}:
+    put:
+      summary: Update a book
+      security:
+        - basicAuth: []
+      description: Updates the details of an existing book.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the book to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        200:
+          description: The updated book.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    delete:
+      summary: Delete a book
+      security:
+        - basicAuth: []
+      description: Deletes a book from the collection by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the book to delete.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success message indicating the book was deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    example: "true - delete"
+  /api/books/recommendations:
+    get:
+      summary: Get book recommendations
+      security:
+        - basicAuth: []
+      description: Returns a list of three book recommendations based on the user's reading list.
+      responses:
+        200:
+          description: A list of recommended books.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+components:
+  securitySchemas:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Book:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Lord of Mysteries"
+        author:
+          type: string
+          example: "Cuttlefish That Loves Diving"
+        genre:
+          type: string
+          example: "fantasy"
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 10
+          example: 10
+        startDate:
+          type: string
+          format: date
+          example: "2022-05-15"
+        completionDate:
+          type: string
+          format: date
+          example: "2024-04-30"
+        review:
+          type: string
+          example: "One of the best book I have ever read. 10/10 worldbuilding coupled with amazing characters and power system."
