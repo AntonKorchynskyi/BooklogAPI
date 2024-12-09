@@ -14,6 +14,8 @@ var swaggerUI = require('swagger-ui-express');
 // loading documentation from YAML file
 var YAML = require('yamljs');
 var swaggerDoc = YAML.load('./documentation/api-specs.yaml');
+// import CORS package
+var cors = require('cors');
 
 // routers
 var indexRouter = require('./routes/index');
@@ -21,6 +23,9 @@ var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/api/books');
 
 var app = express();
+
+// to allows all 'origins' to access this API
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
